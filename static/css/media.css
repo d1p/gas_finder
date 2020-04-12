@@ -1,0 +1,162 @@
+@media (max-width: 374px){
+    .header-to h6{
+        font-size: 10px;
+    }
+    .lang-btn{
+        font-size: 10px;
+    }
+}
+
+
+@media (max-width: 575.98px) {
+    .images {
+        width: 125px;
+    }
+    .image {
+        width: 118px;
+    }
+    button.btn.btn-custom-two.my-2.my-sm-0 {
+        font-size: 12px;
+    }
+    button.btn.btn-custom-three.my-2.my-sm-0 {
+        font-size: 12px;
+    }
+    .bottom-image {
+        margin-top: 65px!important;
+    }
+    footer {
+        margin-top: 140px;
+    }
+    .bottom-image {
+        width: 180px;
+    }
+    .side-bar-menu {
+        display: none;
+    }
+    footer a {
+        color: #ACACAC;
+        font-size: 14px;
+    }
+    footer {
+        background: transparent;
+        text-align: center;
+    }
+    .image {
+        margin-top: 100px;
+    }
+    .images {
+        margin-top: 100px;
+    }
+    .header-two {
+        background: #3A3A3A;
+    }
+    .top-header-btn {
+        visibility: hidden;
+    }
+    .social-icon {
+        visibility: hidden;
+    }
+    .header-two-btn {
+        visibility: visible;
+     }
+     .logo {
+        top: 70px;
+    }
+    .main-content {
+        background-size: cover;
+    }
+    .header-to {
+        height: 50px;
+    }
+    .visit-btn {
+        font-size: 10px;
+    }
+    .come-btn {
+        font-size: 10px;
+    }
+    .lang-btn {
+        font-size: 9px;
+    }
+  }
+@media (max-width: 767.98px) {
+    .images {
+        top: 50%;
+        width: 82px;
+        /* margin-right: auto; */
+        margin-top: 50px;
+    }
+    button.btn.btn-custom-two.my-2.my-sm-0 {
+        font-size: 12px;
+    }
+    button.btn.btn-custom-three.my-2.my-sm-0 {
+        font-size: 12px;
+    }
+    .image {
+        top: 50%;
+        width: 125px;
+        margin-top: 50px;
+    }
+    .bottom-image {
+        width: 160px;
+        margin-top: 0px;
+    }
+    .logo {
+        width: 100px;
+        
+    }
+    .we-come-to-btn {
+        width: 130px;
+        margin-top: 3px;
+    }
+    .some-to-us-btn {
+        width: 125px;
+        margin-top: 5px;
+    }
+    .logo{
+        width: 100px;
+    }
+    .header-to h6{
+        font-size: 10px;
+    }
+
+}
+@media (max-width: 870px) { 
+    .bottom-image {
+        width: 170px;
+        /* margin-top: 400px; */
+    }
+    .side-bar-menu h3 {
+        font-size: 20px;
+        color: #fff;
+    }
+    .side-bar-menu ul li a {
+        text-decoration: none;
+        color: white;
+        font-size: 14px;
+    }
+    .iphone-images {
+        margin-top: 120px;
+    }
+    .image {
+        margin-top: 120px;
+    }
+ }
+
+
+@media (max-width: 991.98px) { 
+    .bottom-image {
+        width: 170px;
+        margin-top: 85px;
+    }
+    .images {
+        margin-top: 80px;
+    }
+    .image {
+        margin-top: 120px;
+    }
+ }
+@media (max-width: 1199.98px) { 
+    .bottom-image {
+        width: 280px;
+    }
+ }

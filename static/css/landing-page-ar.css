@@ -1,0 +1,372 @@
+*{
+    margin: 0;
+    padding: 0;
+
+}
+/* header part css start */
+header{
+    background: #242424;
+    position: relative;
+
+}
+.min-h{
+    min-height: 80vh;
+}
+.navbar-expand .navbar-nav {
+    margin: auto;
+}
+.lang-btn {
+    background: transparent;
+    border: 1px solid #AC8F42;
+    font-size: 14px;
+}
+.lang-btn:hover{
+    background: #AC8F42;
+    border: 1px solid #AC8F42;
+    font-size: 14px;
+    color: #fff;
+}
+.header-two {
+    background: #3a3a3abd;
+    position: absolute;
+    width: 100%;
+    color: white;
+    display: block;
+    z-index: 1;
+}
+.header-to h6{
+    margin-bottom: 0;
+}
+.side-bar-menu h3 {
+    color: #fff;
+}
+.btn-custom{
+    border: 1px solid #AC8F42;
+    color: white;
+}
+.navbar {
+   padding: 0px;
+   padding-bottom: 10px;
+}
+.navbar-expand .navbar-nav .nav-link {
+    color: #AC8F42;
+}
+.logo{
+    
+position: absolute;
+    
+width: 90px;
+    
+top: 60px;
+    
+left: 50%;
+    
+z-index: 1;
+    
+transform: translateX(-50%);
+}
+/* header part css end */
+
+/* main content part css start */
+
+.main-content{
+    background-image: url(../images/M.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    min-height: 80vh;
+}
+.side-bar-menu{
+    background: #AC8F42;
+    /* margin-top: 50px; */
+    padding-top: 100px;
+}
+.side-bar-menu h3{
+  
+
+}
+.side-bar-menu span{
+   
+width: 150px;
+   
+height: 2px;
+   
+display: block;
+   
+background: white;
+margin: auto;
+}
+.side-bar-menu ul{
+
+list-style: none;
+
+padding-top: 20px;
+}
+.side-bar-menu ul li{
+    
+padding: 5px 0px;
+}
+.side-bar-menu ul li:nth-child(2){
+    margin-right: 30px;
+}
+.side-bar-menu ul li:nth-child(3) {
+    margin-right: 30px;
+}
+.side-bar-menu ul li:nth-child(4){
+    margin-right: 30px;
+}
+.side-bar-menu ul li a{
+    text-decoration: none;
+color: white;
+}
+.lgo {
+    margin: auto;
+    width: 100px;
+    padding-bottom: 15px;
+}
+.footer-logo-menu{
+
+margin-top: 130px;
+}
+.footer-logo-menu address{
+    
+color: white;
+}
+.footer-logo-menu p{
+    
+color: white;
+}
+.header-to{
+    
+height: 40px;
+    
+align-items: center;
+}
+.iphone-images{
+    text-align: left;
+}
+.btn-custom-two{
+    background: #AC8F42;
+    color: white;
+}
+.btn-custom-two:hover{
+    background:#fff;
+    color:  #AC8F42;
+    border: 1px solid #AC8F42;
+}
+.btn-custom-three{
+    background: #00BFD3;
+    color: white;
+}
+.btn-custom-three:hover{
+    background: #fff;
+    color: #00BFD3;
+    border: 1px solid #00BFD3;
+}
+.image {
+    top: 50%;
+    width: 150px;
+    margin-left: auto;
+    /* margin-top: 130px; */
+}
+.image img{
+    /* margin-bottom: 15px; */
+}
+.images{
+    top: 50%;
+    width: 100px;
+    margin-right: auto;
+    /* margin-top: 130px; */
+    /* margin-left: 25px; */
+}
+.images img{
+    margin-bottom: 9px;
+    margin-top: 20px;
+    margin-left: 25px;
+}
+.bottom-image {
+    width: 250px;
+    margin: auto;
+    margin-top: 400px;
+}
+.bottom-image img{ 
+}
+i.fas.fa-sliders-h {
+    color: #fff;
+    font-size: 30px;
+    /* display: inline-block; */
+    margin: auto;
+}
+/* main content part css end */
+
+/*footer part css start */
+footer{
+    background: black;
+    height: 70px;
+    line-height: 60px;
+    text-align: end;
+}
+footer a{
+    text-align: right;
+    color: white;
+    font-size: 10px;
+}
+footer a:hover{
+    color: #fff;
+}
+
+/*footer part css start */
+
+/*side bar location css start */
+
+/*banner css start */
+.banner{
+    background-image: url(../images/banner-img.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 40vh;
+}
+/*banner css start */
+
+.side-bar-location{
+    height: 490px;
+    overflow-y: auto;
+    padding-top: 50px;
+}
+.main-content span{
+        height: 2px;
+        width: 45%;
+        display: inline-block;
+        background: #fff;
+}
+.location{
+
+width: 150px;
+
+margin: auto;
+
+text-align: left;
+}
+.location h6{
+    
+} 
+.location p{
+    
+font-size: 14px;
+    
+color: #5d5858;
+}
+.btn-custom-location{
+    background: #AC8F42;
+    color: white;
+    position: absolute;
+    left: 75px;
+    padding: 5px 20px;
+}
+
+/*side bar location css end */
+
+/*map css start */
+
+.serach{
+
+position: relative;
+}
+.serach i{
+    
+position: absolute;
+    
+top: 10px;
+    
+right: 4px;
+    
+font-size: 20px;
+    
+color: #777474;
+} 
+.map{
+    width: 100%;
+}
+
+/*map css end */
+
+.dropdown-menu.show {
+    background: transparent;
+    border: none;
+}
+.side-bar-menu ul {
+    list-style: none;
+    padding-top: 20px;
+    margin: auto;
+    text-align: right;
+    display: inline-block;
+}
+
+.mrsool{
+width: 200px;
+margin: auto;
+}
+.mrsool-row{
+    height: 700px;
+}
+.goldenbrown-row{
+    height: 600px;
+}
+.header-two-btn {
+   visibility: hidden;
+}
+.we-come-to-btn {
+    width: 150px;
+    text-align: center;
+}
+.app-btn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.google-play {
+    width: 100px;
+}
+.app-play {
+    width: 100px;
+}
+.marsool-img {
+    width: 150px;
+    margin: auto;
+}
+.visit-btn{
+    background: #AC8F42;
+    border: none;
+    margin-top: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px 20px;
+}
+.visit-btn:hover {
+    background: #AC8F42;
+    border: none;
+    margin-top: 30px;
+}
+.visit-btn:focus {
+    background: #AC8F42;
+    border: none;
+    margin-top: 30px;
+}
+.come-btn {
+    border: none;
+    margin-top: 30px;
+    background-color: #00BFD3;
+    font-size: 14px;
+}
+.come-btn {
+    border: none;
+    margin-top: 30px;
+    background-color: #00BFD3;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px 20px;
+}
+.come-btn:hover {
+    background-color: #00BFD3;
+}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}{% load i18n %}{% load static from staticfiles %}
+{% block title %} GasFinder
+{% endblock %}
+{% block content %}
+        <link rel="stylesheet" href="{% static 'css/marsool.css' %}">
+
+            <div class="row goldenbrown-row align-items-center">
+          <div class="col-lg-8 col-md-6 text-center">
+            <div class="row">
+              <div class="col-md-6 col-sm-6 m-auto">
+                <div class="image">
+                  <div class="marsool-img">
+                    <img src="{% static 'images/mrsool logo-2.png' %}" class="img-fluid" alt="map">
+                  </div>
+
+
+                  <div class="app-btn">
+                    <div class="play-store">
+                      <a href="https://play.google.com/store/apps/details?id=com.mrsool"><img src="{% static 'images/GooglePlayBadge.png' %}" class="img-fluid" alt=""></a>
+                    </div>
+                    <div class="app-store">
+                      <a href="https://apps.apple.com/us/app/mrsool-%D9%85%D8%B1%D8%B3%D9%88%D9%84/id1040038773"><img src="{% static 'images/app-store.png' %}" class="img-fluid" alt=""></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12">
+            <div class="bottom-image">
+              <img src="{% static 'images/Image 1.png' %}" class="img-fluid" alt="">
+            </div>
+          </div>
+        </div>
+{% endblock %}

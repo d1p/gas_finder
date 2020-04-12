@@ -1,0 +1,63 @@
+{% load i18n %}{% load static from staticfiles %}{% load mathfilters %}
+<div class="row">
+    <div class="col-md-10 offset-md-2" style="margin-top:50px;margin-bottom:10px;">
+        <h5 style="font-weight: bold;">{% trans "RATING WITH REVIEW" %}</h5>
+    </div>
+
+    <div class="col-md-8 offset-md-2">
+        {% if empty == True %}
+            <div>
+                <h6 style="font-weight: normal">Be the first to review
+                    us</h6>
+            </div>
+        {% endif %}
+        <div id="commentlist">
+            {% for review in reviews %}
+                <div class="comment" style="margin-bottom:20px;">
+                    <div class="name-and-date d-block">
+                        <h5 style="float:left;font-weight: bold;margin-bottom:10px;">
+                            {{ review.name }}</h5>
+                        <span style="float:right;margin-top: 8px;font-size: 12px;color: #C2C2C2;"
+                        >{{ review.created_at|timesince }} ago
+                        </span>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div style="display: inline-flex;
+                            {% if LANGUAGE_CODE == "ar" %}float:right;direction: rtl{% endif %}">
+                        {% with ''|center:review.rating as range %}
+                            {% for i in range %}
+                                <img src="{% static 'images/star-full.png' %}"
+                                     alt="Star"
+                                     class="star"/>
+                            {% endfor %}
+                        {% endwith %}
+                        {% with 5|sub:review.rating as rating %}
+                            {% with ''|center:rating as range %}
+                                {% for i in range %}
+                                    <img src="
+{% static 'images/star-empty.png' %}"
+                                         alt="Empty"
+                                         class="star"/>
+                                {% endfor %}
+                            {% endwith %}
+                        {% endwith %}
+
+                    </div>
+                    <p>{{ review.comment }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="control"
+             style="align-items: center;text-align: center;margin:30px 0px;">
+
+            {% if reviews.has_next %}
+                <button class="btn btn-outline-primary btn-sm"
+                        style="border-color:#C79937; color:#C79937"
+                        onclick="nextReview()" id="loadReview">
+                    {% trans "Read more" %}
+                    reviews
+                </button>
+            {% endif %}
+        </div>
+    </div>
+</div>

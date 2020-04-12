@@ -1,0 +1,100 @@
+{% load static from staticfiles %}{% load i18n %}{% load mathfilters %}
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-5">
+    <div class="content-card">
+      <h4 style="font-weight:bold;font-size:1.4rem;text-align: right">
+        {{ store.distributor_name_in_ar }}
+      </h4>
+      <div style="display: inline-flex;float: right">
+        {% with ''|center:store.average_rating as range %} 
+          {% for i in range %}
+            <img
+              src="{% static 'images/star-full.png' %}"
+              alt="Star"
+              class="star"
+            />
+          {% endfor %} 
+        {% endwith %} 
+        {% with 5|sub:store.average_rating as rating %} 
+          {% with ''|center:rating as range %} 
+            {% for i in range %}
+            <img
+              src="{% static 'images/star-empty.png' %}"
+              alt="Empty"
+              class="star"
+            />
+            {% endfor %} 
+          {% endwith %} 
+        {% endwith %}
+
+        <h5 style="font-weight: bold;margin:-3px 20px 0px 0px;">
+          {{ store.average_rating }}
+        </h5>
+      </div>
+      <div class="clearfix"></div>
+      <div>
+        <p
+          style="color:#181E1E;margin-top:20px;font-size:1.0rem;text-align:
+                right"
+        >
+          {{ store.address_in_ar }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div style="float: right">
+      <div class="actions" style="float:right">
+        <img src="{% static 'images/phone-icon.png' %}" alt="icon" />
+        <a
+          href="tel:{{ store.phone_number }}"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="{{ store.phone_number }}"
+          style="margin-right: 15px;margin-left:0px;"
+        >
+          {% trans "Contact Us" %}</a
+        >
+      </div>
+      <div class="clearfix"></div>
+      <div class="actions" style="float:right">
+        <img src="{% static 'images/share-icon.png' %}" alt="icon" />
+        <a
+          href="#"
+          data-toggle="modal"
+          data-target="#shareModal"
+          style="margin-right: 15px;margin-left:0px;"
+        >
+          {% trans "Share" %}
+        </a>
+      </div>
+      <div class="clearfix"></div>
+
+      <div class="actions" style="float:right">
+        <img src="{% static 'images/direction-icon.png' %}" alt="icon" />
+        <a
+	  href="#" onclick="mapsSelector()"
+          style="margin-right: 15px;
+                margin-left:0px;"
+        >
+          {% trans "Get Direction" %}
+        </a>
+      </div>
+      <div class="clearfix"></div>
+
+      <div class="actions" style="float:right">
+        <img src="{% static 'images/rate-icon.png' %}" alt="icon" />
+        <a
+          href="#"
+          data-toggle="modal"
+          data-target="#reviewModal"
+          style="margin-right: 15px;margin-left:0px"
+        >
+          {% trans "Rate Us?" %}
+        </a>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+{% extends "base.html" %}{% load static %}{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block title %} GasFinder {% endblock %}
+
+{% block content %}
+    <style>
+    @media screen and (min-width: 767px) {
+   .bottom-image img{
+       display: none;
+   }
+   .iphone-img{
+       width: 135px;
+       margin-left: -25px;
+       margin-top: -18px;
+   }
+}
+
+@media all and (max-width: 766px) {
+   .iphone-img{
+       width: 109px !important;
+   margin-left: -25px;
+   margin-top: 10px;
+   }
+   .iphone-images {
+   margin-top: 103px !important;
+}
+
+}
+    </style>
+    <div class="row goldenbrown-row align-items-center">
+          <div class="col-lg-8 col-md-12 text-center">
+            <div class="row">
+              <div class="col-md-12 col-12">
+                <div style="margin-right: auto;" class="image">
+                  <img src="{% static 'images/Map-pointer-t.png' %}" class="img-fluid" alt="map">
+                  <a href="{% url 'location-permission' %}"><button class="btn btn-primary visit-btn">{% trans "COME TO VISIT US" %}</button></a>
+                  <div class="some-to-us-btn">
+
+                  </div>
+                  <!-- <a href="map.html" target="_blank"><button class="btn btn-custom-two my-2 my-sm-0" type="submit">COME TO US</button></a> -->
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12 ">
+          </div>
+        </div>
+
+{% endblock %}

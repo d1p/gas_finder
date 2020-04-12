@@ -1,0 +1,434 @@
+{% load i18n %}{% load static from staticfiles %}{% load mathfilters %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<html lang="{{ LANGUAGE_CODE }}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Required meta tags -->
+    <link rel="icon" href="{% static 'images/fav.png' %}" type="image/png">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+          name='viewport'/>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="{% static "material-kit/assets/css/material-kit.min.css" %}">
+
+    <title>{% trans "Where are you from? - GasFinder" %}</title>
+    {% if LANGUAGE_CODE == "ar" %}
+        {% include "arabic.html" %}
+    {% endif %}
+    <style>
+        /* Fade-In Effect */
+        .visible {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 1s linear;
+        }
+
+        /* Fade-Out Effect */
+        .hidden {
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 1s, opacity 1s linear;
+        }
+
+        .star {
+            height: 18px;
+            width: auto;
+        }
+
+        .card {
+            border-radius: 4px;
+            background-color: rgba(248, 248, 248, 0.9);
+        }
+
+        .logo-image {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-top: -6px;
+        }
+
+        .cover-photo {
+            margin-top: 60px;
+            height: 50vh;
+            width: 100%;
+            background-size: cover;
+            background-position: top left;
+            vertical-align: center;
+            text-align: center;
+            align-items: center;
+        }
+
+        .card-body > h1 {
+            font-size: 1.3rem;
+            font-weight: 400;
+        {% if LANGUAGE_CODE == "ar" %}
+            text-align: right;
+        {% endif %}
+        }
+	{% autoescape off %}
+        {% if LANGUAGE_CODE == 'en-us' %}
+            {% if city.english_font %}
+                @font-face {
+                    font-family: '{{ city.english_font.font_family }}';
+                    src: url('{{ city.english_font.font_file.url }}');
+                }
+            {% else %}
+                @font-face {
+                    font-family: '{{ default_font_settings.english_font.font_family }}';
+                    src: url('{{ default_font_settings.english_font.font_file.url }}');
+                }
+            {% endif %}
+        {% else %}
+            {% if city.arabic_font %}
+                @font-face {
+                    font-family: '{{ city.arabic_font.font_family }}';
+                    src: url('{{ city.arabic_font.font_file.url }}');
+                }
+            {% else %}
+                @font-face {
+                    font-family: '{{ default_font_settings.arabic_font.font_family }}';
+                    src: url('{{ default_font_settings.arabic_font.font_file.url }}');
+                }
+            {% endif %}
+        {% endif %}
+	{% endautoescape %}
+
+        .navbar .navbar-nav .nav-item .nav-link {
+            font-size: 16px;
+        }
+
+        {% if LANGUAGE_CODE == 'en-us' %}
+            .header-title {
+		    padding-top:10vh;
+            {% if city.english_font %}
+                font-family: '{{ city.english_font.font_family }}', {{city.english_font.fallback_font_family}} !important
+                ;
+            {% else %}
+                font-family: '{{ default_font_settings.english_font.font_family }}', {{default_font_settings.english_font.fallback_font_family}} !important
+                ;
+            {% endif %}
+
+            {% if city.english_font_size %}
+                font-size: {{ city.english_font_size }}rem !important;
+            {% else %}
+                font-size: {{ default_font_settings.english_font_size }}rem !important;
+
+            {% endif %}
+
+            {% if city.english_font_weight %}
+                font-weight: {{ city.english_font_weight }} !important;
+            {% else %}
+                font-weight: {{ default_font_settings.english_font_weight }} !important;
+
+            {% endif %}
+            {% if city.english_font_style %}
+                font-style: {{ city.english_font_style }} !important;
+            {% else %}
+                font-style: {{ default_font_settings.english_font_style }} !important;
+
+            {% endif %}
+            {% if city.english_line_height %}
+                line-height: {{ city.english_line_height }}rem !important;
+            {% else %}
+                line-height: {{ default_font_settings.english_line_height }}rem !important;
+
+            {% endif %}
+            {% if city.english_font_color %}
+                color: #{{ city.english_font_color }} !important;
+            {% else %}
+                color: #{{ default_font_settings.english_font_color }} !important;
+
+            {% endif %}
+            }
+        {% else %}
+            .header-title {
+		    padding-top:10vh;
+            {% if city.arabic_font %}
+                font-family: '{{ city.arabic_font.font_family }}', {{city.arabic_font.fallback_font_family}} !important;
+            {% else %}
+                font-family: '{{ default_font_settings.arabic_font.font_family }}', {{default_font_settings.arabic_font.fallback_font_family}} !important
+                ;
+            {% endif %}
+            {% if city.arabic_font_size %}
+                font-size: {{ city.arabic_font_size }}rem !important;
+            {% else %}
+                font-size: {{ default_font_settings.arabic_font_size }}rem !important;
+
+            {% endif %}
+            {% if city.arabic_font_weight %}
+                font-weight: {{ city.arabic_font_weight }} !important;
+            {% else %}
+                font-weight: {{ default_font_settings.arabic_font_weight }} !important;
+
+            {% endif %}
+            {% if city.arabic_font_style %}
+                font-style: {{ city.arabic_font_style }} !important;
+            {% else %}
+                font-style: {{ default_font_settings.arabic_font_style }} !important;
+            {% endif %}
+            {% if city.arabic_line_height %}
+                line-height: {{ city.arabic_line_height }}rem !important;
+            {% else %}
+                line-height: {{ default_font_settings.arabic_line_height }}rem !important;
+
+            {% endif %}
+            {% if city.arabic_font_color %}
+                color: #{{ city.arabic_font_color }} !important;
+            {% else %}
+                color: #{{ default_font_settings.arabic_font_color }} !important;
+
+            {% endif %}
+            }
+        {% endif %}
+    </style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-sm fixed-top bg-white"
+     {% if LANGUAGE_CODE == "ar" %}dir="rtl"{% endif %}>
+    <div class="container">
+        <div class="logo-image">
+            <a href="/">
+                <img src="{% static 'images/GB_Primary_Logo.png' %}" class="img-fluid">
+            </a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="{% url 'location-input' %}">{% trans "Search stores" %}</a>
+                </li>
+                <li class="nav-item">
+                    <form class="form-inline"
+                          action="{% url 'set_language' %}"
+                          method="post">{% csrf_token %}
+                        <input name="next" type="hidden" value="/stores-near-you/{{ lat }}/{{ lng }}/">
+                        <input name="language" type="hidden"
+                               value="{% if LANGUAGE_CODE == "ar" %}en-us{% else %}ar{% endif %}"/>
+                        {% if LANGUAGE_CODE == "ar" %}
+                            <button class="btn btn-link"
+                                    style="color:#3C4858!important;font-size: 16px;"
+                            >Switch to English
+                            </button>
+
+                        {% else %}
+                            <button class="btn btn-link" type="submit"
+                                    style="color:#3C4858!important;font-size: 16px;"
+                            >اللغة العربية
+                            </button>
+                        {% endif %}
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+</nav>
+<div class="cover-photo"
+     style="background-image: url('{% if city.cover_picture %}{{ city.cover_picture.url }}{% else %}{{ city.get_cover_photo.url }}{% endif %}');">
+    {% if LANGUAGE_CODE == "ar" %}
+        <h1 class="header-title">
+            {% if city.welcome_message_in_arabic %}
+                {{ city.welcome_message_in_arabic }}
+            {% else %}
+                {{ city.get_default_welcome_message_arabic }}
+            {% endif %}<br>
+            {{ city.name_in_ar }}
+        </h1>
+    {% else %}
+        <h1 class="header-title">
+            {% if city.welcome_message_in_english %}
+                {{ city.welcome_message_in_english }}
+            {% else %}
+                {{ city.get_default_welcome_message_english }}
+            {% endif %}<br>
+            {{ city.name }}
+        </h1>
+    {% endif %}
+</div>
+<div class="list-div" style="height:62px;width:100%;display: block;
+background-color:#fff;align-items: center;text-align: center">
+    <div class="dropdown">
+        <button class="btn btn-secondary" type="button"
+                id="dropdownMenuButton"
+                style="background: rgba(248, 248, 248, 0.9);
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color:#C2C2C2!important">
+
+            {% trans "Grid View" %}
+            <i class="fa fa-angle-up"
+               style='margin-left:50px;font-family: "Font Awesome 5 Free"!important;'
+               id="dropdownMenuButtonIC"></i>
+        </button>
+    </div>
+</div>
+<span class="metadata-marker" style="display: none;" data-region_tag="html-body"></span>
+<div id="map" style="height:100vh;margin:0px;"></div>
+<div id="menu" style="position:absolute;top:75vh;z-index:99;overflow:auto;height:90vh;
+width:100%"
+     class="visible">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+
+                <div class="row">
+                    {% for store in nearest_stores %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card" style="cursor:pointer;" onclick="goTo(
+                                    {{ store.id }})">
+                                <!-- DISTANCE: {{ store.distance }} -->
+                                <div class="card-body custom-card">
+                                    <h1>{% if LANGUAGE_CODE == 'ar' %}
+                                        {{ store.distributor_name_in_ar }}
+                                        {% else %}{{ store.distributor_name }}
+                                    {% endif %}</h1>
+
+                                    <div style="display: inline-flex;
+                                            {% if LANGUAGE_CODE == "ar" %}float:right;direction: rtl{% endif %}">
+                                        {% with ''|center:store.average_rating as range %}
+                                            {% for i in range %}
+                                                <img src="{% static 'images/star-full.png' %}"
+                                                     alt="Star"
+                                                     class="star"/>
+                                            {% endfor %}
+                                        {% endwith %}
+                                        {% with 5|sub:store.average_rating as rating %}
+                                            {% with ''|center:rating as range %}
+                                                {% for i in range %}
+                                                    <img src="
+{% static 'images/star-empty.png' %}"
+                                                         alt="Empty"
+                                                         class="star"/>
+                                                {% endfor %}
+                                            {% endwith %}
+                                        {% endwith %}
+
+                                        <h5 style="font-weight: bold;
+                                                {% if LANGUAGE_CODE == 'ar' %}
+                                                    margin:-3px 20px 0px 0px;
+                                                {% else %}
+                                                    margin:-3px 0px 0px 20px;
+                                                {% endif %}
+                                                ">
+                                            {{ store.u_average_rating }}</h5>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    {% if LANGUAGE_CODE == 'ar' %}
+                                        <h4 style="text-align: right"
+                                        >{{ store.address_in_ar }}</h4>
+                                    {% else %}
+                                        <h4 style="text-align: left">
+                                            {{ store.address_in_en }}</h4>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="{% static 'material-kit/assets/js/core/bootstrap-material-design.min.js' %}"></script>
+<script src="{% static 'material-kit/assets/js/material-kit.min.js' %}"></script>
+<script>
+    function goTo(store_id) {
+        window.location.href = '/{{ LANGUAGE_CODE }}/store/' +
+            store_id
+            + '/{{ lat }}/{{ lng }}/';
+    }
+
+    var features = [
+        {% for x in nearest_stores %}
+            {
+                position: {lat: {{x.lat}}, lng: {{ x.lng }}},
+                store_id: {{ x.id }}
+            },
+        {% endfor %}
+    ];
+    var map;
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: {{ lat }}, lng: {{ lng }}},
+            mapTypeId: 'roadmap',
+            zoom: 13
+        });
+    }
+
+    $(document).ready(function () {
+        features.forEach(function (feature) {
+            var marker = new google.maps.Marker({
+                position: feature.position,
+                icon: 'https://ggez.sgp1.cdn.digitaloceanspaces.com/gb-sa-902-ska(d%5E!$a$k283/Location%20pin%20(1).png',
+                map: map,
+                url: '/{{ LANGUAGE_CODE }}/store/' + feature.store_id + '/' + {{ lat }}
+                    +'/' +
+                    {{ lng }}
+                    +'/'
+            });
+            google.maps.event.addListener(marker, 'click', function () {
+                window.location.href = this.url;
+            });
+        });
+        // Add current location marker
+        var myMarker = new google.maps.Marker({
+            position: {lat: {{lat}}, lng: {{lng}}},
+            map: map,
+            title: 'My location'
+        });
+    });
+    $(document).ready(function () {
+        $("#dropdownMenuButton").click(function () {
+            $("#menu").toggleClass("visible hidden");
+            $("#dropdownMenuButtonIC").toggleClass("fa-angle-up fa-angle-down")
+        });
+    });
+</script>
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRjp7TedIq1JMJcEZbKByBHF6PCJGMRGw&callback=initMap&language={{ LANGUAGE_CODE }}"
+></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145332233-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-145332233-1');
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pep8 = "*"
+autopep8 = "*"
+mixer = "*"
+
+[packages]
+django = ">=2.2.4"
+psycopg2-binary = "*"
+dj-database-url = "*"
+django-storages = "*"
+boto3 = "*"
+gunicorn = "*"
+python-decouple = "*"
+raven = "*"
+pillow = "*"
+googlemaps = "*"
+django-mathfilters = "*"
+djangorestframework = "*"
+django-import-export = "*"
+requests = "*"
+
+[requires]
+python_version = "3.7"

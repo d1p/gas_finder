@@ -1,0 +1,201 @@
+{% load i18n %}{% load static from staticfiles %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Required meta tags -->
+    <link rel="icon" href="{% static 'images/fav.png' %}" type="image/png">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+          name='viewport'/>
+
+    <link rel="stylesheet"
+          href="{% static "material-kit/assets/css/material-kit.min.css" %}">
+
+    <title>{% trans "Where are you from? - GasFinder" %}</title>
+    {% if LANGUAGE_CODE == "ar" %}
+        <style>
+            @font-face {
+                font-family: 'FrutigerLTArabic';
+                src: url('https://ggez.sgp1.cdn.digitaloceanspaces.com/gb-sa-902-ska(d%5E!$a$k283/css/FrutigerLTArabic-65Bold.ttf');
+                font-weight: bold;
+            }
+
+            * {
+                font-size: 100%;
+                font-family: FrutigerLTArabic !important;
+            }
+
+        </style>
+    {% endif %}
+    <style>
+        body {
+            transform: translate3d(0px, 0px, 0px);
+            background-position: center center;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        .header {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+        }
+
+        #gb-logo {
+            height: 30vh;
+            width: auto;
+        }
+
+        .on-loc {
+            margin-top: 2rem;
+            font-size: 3rem;
+        }
+
+        .loc {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 767.98px) {
+            #gb-logo {
+                height: 30vh;
+            }
+
+            .on-loc {
+                margin-top: 2rem;
+                font-size: 2.5rem;
+            }
+
+            .loc {
+                font-size: 3rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        .btn-outline-primary:hover {
+            box-shadow: none !important;
+            background-color: transparent !important;
+        }
+    </style>
+</head>
+<body style="background-image: url('{% static 'images/m2.jpg' %}');">
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-8 col-sm-6 offset-sm-6">
+            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                <input name="next" type="hidden" value="/">
+                <input name="language" type="hidden"
+                       value="{% if LANGUAGE_CODE == "ar" %}en-us{% else %}ar{% endif %}"/>
+                {% if LANGUAGE_CODE == "ar" %}
+                    <button class="btn btn-outline-primary btn-sm"
+                            style="border-color:#C79937;color:#C79937;margin-top:15px;
+                            float: right;">Switch to English</button>
+
+                {% else %}
+                    <button class="btn btn-outline-primary btn-sm" type="submit"
+                            style="border-color:#C79937;color:#C79937;margin-top:15px;float: right;">اللغة العربية</button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+<div class="header">
+    <div class="container-fluid">
+        <div class="row d-block" id="desktop-language-buttons"
+             style="align-items: center;text-align: center"
+        >
+
+            <img src="{% static "images/Group 2.png" %}" alt="GB LOGO" id="gb-logo"/>
+            {% if LANGUAGE_CODE == 'ar' %}
+                <h1 style="color:#FDC353;font-weight: bold;"
+                    class="on-loc">هل ترغب بتحديد موقعك</h1>
+            {% else %}
+                <h1 style="color:#FDC353;font-weight: bold;"
+                    class="on-loc">Turn on your</h1>
+                <h1 style="color:#FDC353;font-weight: bold;"
+                    class="loc">LOCATION</h1>
+            {% endif %}
+            <div class="clearfix"></div>
+            <a href="{% url 'location-input' %}" class="btn btn-secondary" style="background: #A0720F;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 2px;color:#fff;font-weight:600;margin:20px;">
+                {% trans "NO" %}
+            </a>
+
+            <a href="#" class="btn btn-secondary" style="background: #C79937;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 2px;color:#fff;font-weight:600;margin:20px;"
+               onclick="get_location();">
+                {% trans "YES" %}
+            </a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function showAlert(message) {
+        alert(message);
+    }
+
+
+    function get_location() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, fail);
+        } else {
+            alert("{% trans "Your browser does not supports GeoLocation, Please upgrade your browser." %}");
+        }
+    }
+
+    function success(position) {
+        window.location.href = '/{{ LANGUAGE_CODE }}/stores-near-you/' + position.coords.latitude + '/' + position.coords.longitude + '/';
+    }
+
+    function fail(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                showAlert("{% trans "Location permission denied, We need to access your location in order to show the nearest stores." %}")
+                break;
+            case error.POSITION_UNAVAILABLE:
+                showAlert("{% trans "Location information is unavailable. Please enable GPS" %}")
+                break;
+            case error.TIMEOUT:
+                showAlert("{% trans "We need to access your location in order to show the nearest stores." %}")
+                break;
+            case error.UNKNOWN_ERROR:
+                showAlert("{% trans "Unknown error." %}")
+                break;
+        }
+    }
+</script>
+<div class="footer">
+
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="{% static 'material-kit/assets/js/core/bootstrap-material-design.min.js' %}"></script>
+<script src="{% static 'material-kit/assets/js/material-kit.min.js' %}"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145332233-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-145332233-1');
+</script>
+</body>
+</html>
+
+

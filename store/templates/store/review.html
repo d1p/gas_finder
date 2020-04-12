@@ -1,0 +1,34 @@
+{% load static from staticfiles %}{% load i18n %}{% load mathfilters %}
+{% get_current_language as LANGUAGE_CODE %}
+{% for review in reviews %}
+    <div class="comment" style="margin-bottom:20px;">
+        <div class="name-and-date d-block">
+            <h5 style="float:left;font-weight: bold;margin-bottom:10px">
+                {{ review.name }}</h5>
+            <span style="float:right">{{ review.created_at|timesince }}</span>
+        </div>
+        <div class="clearfix"></div>
+        <div style="display: inline-flex;
+                {% if LANGUAGE_CODE == "ar" %}float:right;direction: rtl{% endif %}">
+            {% with ''|center:review.rating as range %}
+                {% for i in range %}
+                    <img src="{% static 'images/star-full.png' %}"
+                         alt="Star"
+                         class="star"/>
+                {% endfor %}
+            {% endwith %}
+            {% with 5|sub:review.rating as rating %}
+                {% with ''|center:rating as range %}
+                    {% for i in range %}
+                        <img src="
+{% static 'images/star-empty.png' %}"
+                             alt="Empty"
+                             class="star"/>
+                    {% endfor %}
+                {% endwith %}
+            {% endwith %}
+
+        </div>
+        <p>{{ review.comment }}</p>
+    </div>
+{% endfor %}

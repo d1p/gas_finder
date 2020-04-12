@@ -1,0 +1,131 @@
+{% load static %}{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <title>{% trans "Direction to GasFinder" %}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"
+            integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="map" style="height:100vh;width: auto"></div>
+<script src="https://maps.googleapis
+.com/maps/api/js?key=AIzaSyBRjp7TedIq1JMJcEZbKByBHF6PCJGMRGw&language={{ LANGUAGE_CODE }}"></script>
+
+<script>
+    var pos;
+
+    function showAlert(message) {
+        alert(message);
+    }
+
+
+    function success(position) {
+        initMap(position);
+        calcRoute(position);
+    }
+
+    function fail(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                showAlert("{% trans "Location permission denied, We need to access your location in order to show the nearest stores." %}")
+                break;
+            case error.POSITION_UNAVAILABLE:
+                showAlert("{% trans "Location information is unavailable. Please enable GPS" %}")
+                break;
+            case error.TIMEOUT:
+                showAlert("{% trans "We need to access your location in order to show the nearest stores." %}")
+                break;
+            case error.UNKNOWN_ERROR:
+                showAlert("{% trans "Unknown error." %}")
+                break;
+        }
+    }
+
+    var directionsService = new google.maps.DirectionsService();
+
+    var map;
+
+    function initMap(pos) {
+        var myAdr = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        var mapOptions = {
+            zoom: 13,
+            center: myAdr
+        };
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    }
+
+    function calcRoute(p) {
+        var start = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+        var end = new google.maps.LatLng({{ store.lat }}, {{ store.lng }});
+        var request = {
+            origin: start,
+            destination: end,
+            travelMode: 'DRIVING'
+        };
+        directionsService.route(request, function (response, status) {
+            if (status === 'OK') {
+                new google.maps.DirectionsRenderer({
+                    map: map,
+                    directions: response,
+                    suppressMarkers: true
+                });
+                var leg = response.routes[0].legs[0];
+                makeMarker(leg.start_location, 'https://ggez.sgp1.cdn.digitaloceanspaces.com/gb-sa-902-ska(d%5E!$a$k283/Vector.png', "You", map);
+                makeMarker(leg.end_location, 'https://ggez.sgp1.cdn.digitaloceanspaces' +
+                    '.com/gb-sa-902-ska(d%5E!$a$k283/Location%20pin%20(1).png',
+                    'GasFinder', map);
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, fail);
+        } else {
+            alert("{% trans "Your browser does not supports GeoLocation, Please upgrade your browser." %}");
+        }
+    });
+
+    function makeMarker(position, icon = null, title, map) {
+        if (icon != null)
+            new google.maps.Marker({
+                position: position,
+                map: map,
+                icon: icon,
+                title: title
+            });
+        else
+            new google.maps.Marker({
+                position: position,
+                map: map,
+                title: title
+            });
+    }
+
+    var icons = {
+        start: new google.maps.MarkerImage(
+            // URL
+            'http://maps.google.com/mapfiles/ms/micons/red.png',
+            // (width,height)
+            new google.maps.Size(44, 32),
+            // The origin point (x,y)
+            new google.maps.Point(0, 0),
+            // The anchor point (x,y)
+            new google.maps.Point(22, 32)),
+    };
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145332233-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-145332233-1');
+</script>
+</body>
+</html>

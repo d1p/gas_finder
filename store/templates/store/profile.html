@@ -1,0 +1,552 @@
+{% load i18n %}{% load static from staticfiles %}{% load mathfilters %}
+{% get_current_language as LANGUAGE_CODE %}
+{% load i18n %}{% load static from staticfiles %}{% load mathfilters %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<html lang="{{ LANGUAGE_CODE }}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Required meta tags -->
+    <link rel="icon" href="{% static 'images/fav.png' %}" type="image/png">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+          name='viewport'/>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="{% static "material-kit/assets/css/material-kit.min.css" %}">
+
+    {% if LANGUAGE_CODE == "ar" %}
+        {% include "arabic.html" %}
+    {% else %}
+        <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    {% endif %}
+
+    <title>{% trans "GasFinder" %}</title>
+    <style>
+
+        body {
+            padding-top: 60px;
+        }
+
+        .logo-image {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-top: -6px;
+        }
+
+        #map {
+            height: 40vh;
+            margin-top: 50px;
+        }
+
+        .rating-widget {
+            margin-top: 20px;
+        }
+
+        /* Rating Star Widgets Style */
+        .rating-stars ul {
+            list-style-type: none;
+            padding: 0;
+
+            -moz-user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .rating-stars ul > li.star {
+            display: inline-block;
+
+        }
+
+        /* Idle State of the stars */
+        .rating-stars ul > li.star > i.fa {
+            font-size: 2.5em; /* Change the size of the stars */
+            color: #ccc; /* Color on idle state */
+        }
+
+        /* Hover state of the stars */
+        .rating-stars ul > li.star.hover > i.fa {
+            color: #FFCC36;
+        }
+
+        /* Selected state of the stars */
+        .rating-stars ul > li.star.selected > i.fa {
+            color: #FF912C;
+        }
+
+        body {
+            background-color: #fff;
+        }
+
+        .gallery-wrapper {
+            overflow: hidden;
+        }
+
+        .grid-item {
+            margin-bottom: 30px;
+        }
+
+        .share-img {
+            padding: 0px 10px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .cover-photo {
+            height: 40vh;
+            width: 100%;
+            background-size: cover;
+            background-position: top left;
+        }
+
+        .fc {
+            background: linear-gradient(to top, #f1f1f1, 10%, #fff);
+        }
+
+        .hide {
+            display: none;
+        }
+
+        footer {
+            margin-top: 50px;
+            height: 30vh;
+            width: 100%;
+            background-size: contain;
+
+        }
+
+        .star {
+            height: 18px;
+            width: auto;
+        }
+
+        .actions {
+            margin: 15px 0px;
+        }
+
+        .actions > img {
+            height: 22px;
+            width: auto;
+        }
+
+        .actions > a {
+            color: #C79937;
+            font-size: 1rem;
+            margin-left: 15px;
+        }
+
+        .navbar .navbar-nav .nav-item .nav-link {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body {% if LANGUAGE_CODE == "ar" %}dir="rtl"{% endif %}>
+<nav class="navbar navbar-expand-lg fixed-top bg-white">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <div class="logo-image">
+                <img src="{% static 'images/GB_Primary_Logo.png' %}" class="img-fluid">
+            </div>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                {% if lat and lng %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="/stores-near-you/{{ lat }}/{{ lng }}/"
+                        >{% trans "Near by stores" %}</a>
+                    </li>
+                {% endif %}
+
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="{% url 'location-input' %}">{% trans "Search stores" %}</a>
+                </li>
+                <li class="nav-item">
+                    <form class="form-inline"
+                          action="{% url 'set_language' %}"
+                          method="post">{% csrf_token %}
+                        <input name="next" type="hidden"
+                               value="/store/{{ store.id }}/{% if lat and lng %}{{ lat }}/{{ lng }}/{% endif %}">
+                        <input name="language" type="hidden"
+                               value="{% if LANGUAGE_CODE == "ar" %}en-us{% else %}ar{% endif %}"/>
+                        {% if LANGUAGE_CODE == "ar" %}
+                            <button class="btn btn-link"
+                                    style="color:#3C4858!important;font-size: 16px;"
+                            >Switch to English
+                            </button>
+
+                        {% else %}
+                            <button class="btn btn-link" type="submit"
+                                    style="color:#3C4858!important;font-size: 16px;"
+                            >اللغة العربية
+                            </button>
+                        {% endif %}
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+<div class="cover-photo"
+     style="background-image: url('{% if store.cover_photo %}{{ store.cover_photo.url }}{% else %}{{ store.get_cover_photo.url }}{% endif %}')"></div>
+<div class="container" style="margin-top:50px;">
+    {% if LANGUAGE_CODE == "en-us" %}
+        {% include "store/content-en.html" %}
+    {% else %}
+        {% include "store/content-ar.html" %}
+    {% endif %}
+</div>
+
+<div id="map"></div>
+
+<div class="container">
+    {% if LANGUAGE_CODE == "en-us" %}
+        {% include "store/comments-en.html" %}
+    {% else %}
+        {% include "store/comments-ar.html" %}
+    {% endif %}
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-10" style="margin-top:50px;margin-bottom:10px;">
+            <h5 style="font-weight: bold;{% if LANGUAGE_CODE == "ar" %}float:right;{% endif %}"
+            >{% trans "PHOTOS" %}</h5>
+        </div>
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+            <div class="gallery-wrapper clearfix">
+                <div class="row">
+                    {% for photo in store.photo_gallery %}
+                        <div class="col-lg-6  grid-item">
+                            <img src="{{ photo.picture.url }}" alt="Picture"
+                                 class="img-fluid rounded"/>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="">
+    <footer style="background: url('https://ggez.sgp1.digitaloceanspaces.com/gb-sa-902-ska(d%5E!$a$k283/images/golden_logo-01.svg') bottom no-repeat;">
+
+    </footer>
+</div>
+
+<!-- Modal for review -->
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog"
+     aria-labelledby="reviewModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div style="text-align: center;align-items: center">
+                    <img src="{% static 'images/cookie.png' %}" style="height:20vh"/>
+                </div>
+                <div class="alert alert-success hide" role="alert" id="alert"
+                     style="margin-top:10px;text-align: center">
+
+                </div>
+                <div>
+                    <form id="reviewForm">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="{% trans "Your name" %}"/>
+                            <span class="help-block"
+                                  id="nameHelp"></span>
+
+                            <input type="hidden" value="0" name="rating" id="rating"/>
+                            <input type="hidden" value="{{ store.id }}" id="store"
+                                   name="store"/>
+                        </div>
+                        <section class='rating-widget'>
+                            <!-- Rating Stars Box -->
+                            <div class='rating-stars text-center'>
+                                <ul id='stars'>
+                                    <li class='star' title='Poor' data-value='1'>
+                                        <i class='fa fa-star fa-fw'
+                                           style='font-family: "Font Awesome 5 Free"!important;'></i>
+                                    </li>
+                                    <li class='star' title='Fair' data-value='2'>
+                                        <i class='fa fa-star fa-fw'
+                                           style='font-family: "Font Awesome 5 Free"!important;'></i>
+                                    </li>
+                                    <li class='star' title='Good' data-value='3'>
+                                        <i class='fa fa-star fa-fw'
+                                           style='font-family: "Font Awesome 5 Free"!important;'></i>
+                                    </li>
+                                    <li class='star' title='Excellent' data-value='4'>
+                                        <i class='fa fa-star fa-fw'
+                                           style='font-family: "Font Awesome 5 Free"!important;'></i>
+                                    </li>
+                                    <li class='star' title='WOW!!!' data-value='5'>
+                                        <i class='fa fa-star fa-fw'
+                                           style='font-family: "Font Awesome 5 Free"!important;'></i>
+                                    </li>
+                                </ul>
+                            </div>
+                            <span class="help-block"
+                                  id="ratingHelp"></span>
+
+                        </section>
+                        <div class="form-group">
+                                <textarea type="text" class="form-control" id="review"
+                                          rows="4" name="comment"
+                                          placeholder="
+{% trans "Leave your comment" %}"></textarea>
+                            <span class="help-block" id="commentHelp"></span>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">
+                    {% trans "Close" %}
+                </button>
+                <button type="button" class="btn btn-outline-primary"
+                        style="border-color:#C79937; color:#C79937"
+                        onclick="submitReview();">
+                    {% trans "Submit" %}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for share -->
+<div class="modal fade" id="shareModal" tabindex="-1" role="dialog"
+     aria-labelledby="shareModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center;align-items: center">
+                    <img src="{% static 'images/share-image.png' %}"
+                         style="height:20vh"/>
+                </div>
+                <div style="text-align: center;margin-top: 20px;margin-bottom: 20px;">
+                    <a href="https://www.facebook.com/dialog/share?app_id=1286883958130920&display=popup&href=https://loc.GASFINDER.com.bd{% url 'store_profile' store.id %}&redirect_uri=https://loc.GASFINDER.com.bd{% url 'store_profile' store.id %}">
+                            <img src="{% static 'images/fb-share.png' %}"
+                             alt="Share in facebook"
+                             class="share-img"/></a>
+                    <a href="https://twitter.com/intent/tweet?url=https://loc.GASFINDER.com.bd/store/{{ store.id }}/">
+                    <img src="{% static 'images/twitter-share.png' %}"
+                         alt="Share in twitter" class="share-img"/></a>
+                    <a href="https://wa.me/?text=https://loc.GASFINDER.com.bd/store/{{        store.id }}/">
+                    <img src="{% static 'images/whatsapp-share.png' %}"
+                         alt="Share in whatsapp" class="share-img"/></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="{% static 'material-kit/assets/js/core/bootstrap-material-design.min.js' %}"></script>
+<script src="{% static 'material-kit/assets/js/material-kit.min.js' %}"></script>
+<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+<script>
+    // masonry
+    var $grid = $('.gallery-wrapper').masonry({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        transitionDuration: 0,
+    });
+
+    $grid.imagesLoaded().progress(function () {
+        $grid.masonry();
+    });
+    $(document).ready(function () {
+
+        /* 1. Visualizing things on Hover - See next part for action on click */
+        $('#stars li').on('mouseover', function () {
+            var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
+
+            // Now highlight all the stars that's not after the current hovered star
+            $(this).parent().children('li.star').each(function (e) {
+                if (e < onStar) {
+                    $(this).addClass('hover');
+                } else {
+                    $(this).removeClass('hover');
+                }
+            });
+
+        }).on('mouseout', function () {
+            $(this).parent().children('li.star').each(function (e) {
+                $(this).removeClass('hover');
+            });
+        });
+
+
+        /* 2. Action to perform on click */
+        $('#stars li').on('click', function () {
+            var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+            var stars = $(this).parent().children('li.star');
+
+            for (i = 0; i < stars.length; i++) {
+                $(stars[i]).removeClass('selected');
+            }
+
+            for (i = 0; i < onStar; i++) {
+                $(stars[i]).addClass('selected');
+            }
+
+            // JUST RESPONSE (Not needed)
+            var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+            responseMessage(ratingValue);
+
+        });
+
+
+    });
+
+
+    function responseMessage(value) {
+        $("#rating").val(value);
+    }
+
+    let pageNumber = 1;
+
+    function nextReview() {
+        $("#loadReview").html('{% trans "Loading..." %}');
+        pageNumber++;
+        $.get('/{{ LANGUAGE_CODE }}/more_reviews/{{ store.id }}/' + pageNumber + '/',
+            function (data, status) {
+                console.log(status)
+                if (status === "success") {
+                    $("#commentlist").append(data);
+                    $("#loadReview").html('{% trans "Read more" %}');
+                }
+            }).fail(function () {
+            $("#loadReview").html('{% trans "End of result" %}');
+            $("#loadReview").prop("disabled", true);
+        });
+    }
+
+
+    function submitReview() {
+        $.post("/{{ LANGUAGE_CODE }}/api/reviews/", $("#reviewForm").serialize()).done(function
+            () {
+            document.getElementById("alert").className = "alert alert-success";
+            $("#alert").text("{% trans 'Your review has successfully been posted.' %}");
+        }).fail(function (data) {
+            const resp = data.responseJSON;
+            $("#alert").text('');
+            for (const x in resp) {
+                $("#" + x + "Help").text(resp[x]);
+            }
+
+        });
+    }
+
+</script>
+	<script>
+		function getMobileOperatingSystem() {
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/android/i.test(userAgent)) {
+        return "Android";
+    }
+
+    // iOS detection from: http://stackoverflow.com/a/9039885/177710
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+    }
+
+    return "unknown";
+}
+
+function mapsSelector() {
+    var map = getMobileOperatingSystem();
+    if (map == "iOS") {
+	    window.open("https://maps.google.com/maps/dir/?api=1&destination={{store.lat}},{{store.lng}}&dir_action=navigate");
+    } else if (map == "Android"){
+	    window.open("https://maps.google.com/maps/dir/?daddr={{store.lat}},{{store.lng}}&amp;ll=");
+    } else {
+        window.open('{% url 'direction' store.id %}');
+    }
+}
+
+	</script>
+<script src="https://maps.googleapis
+.com/maps/api/js?key=AIzaSyBRjp7TedIq1JMJcEZbKByBHF6PCJGMRGw&language={{ LANGUAGE_CODE }}"
+></script>
+<script>
+    var icons = {
+        GB: {
+            icon: 'https://ggez.sgp1.cdn.digitaloceanspaces.com/gb-sa-902-ska(d%5E!$a$k283/Location%20pin%20(1).png'
+        }
+    };
+    var features = [{
+        position: new google.maps.LatLng({{ store.lat }}, {{ store.lng }}),
+        type: 'GB',
+        store_id: {{ store.id }}
+    }
+
+    ];
+    var map;
+
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: new google.maps.LatLng({{ store.lat }}, {{ store.lng }}),
+        mapTypeId: 'roadmap',
+        zoom: 13
+    });
+
+    features.forEach(function (feature) {
+        var marker = new google.maps.Marker({
+            position: feature.position,
+            icon: icons[feature.type].icon,
+            map: map,
+            url: '/store/' + feature.store_id + '/'
+        });
+        google.maps.event.addListener(marker, 'click', function () {
+            window.location.href = this.url;
+        });
+    });
+    $(document).ready(function () {
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    });
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145332233-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-145332233-1');
+</script>
+</body>
+</html>
